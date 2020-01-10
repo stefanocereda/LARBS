@@ -161,7 +161,8 @@ setupnetworkmanager(){
 setuppass() {
 	dialog --title "GnuPG!" --msgbox "Please import and trust your GnuPG keys before going on" 10 60
 	pass=$(dialog --no-cancel --passwordbox "Enter a password for the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
-	sudo -u "$name" git clone https://stefanocereda:${pass}@github.com/stefanocereda/pass.git .password-store >/dev/null 2>&1
+	sudo -u "$name" git clone https://stefanocereda:${pass}@github.com/stefanocereda/pass.git .local/share/password-store >/dev/null 2>&1
+	# here we need to init the password store and setup the git stuff
         }
 
 
