@@ -151,7 +151,7 @@ systembeepoff() { dialog --infobox "Getting rid of that retarded error beep soun
 finalize(){ \
 	dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Luke" 12 80
 	}
-	
+
 setupnetworkmanager(){
         dialog --infobox "Installing and enabling NetworkManager..." 4 60
 	installpkg networkmanager
@@ -164,9 +164,9 @@ setuppass() {
         pass=$(dialog --no-cancel --passwordbox "Enter a password for the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
 	repo=$(dialog --no-cancel --passwordbox "Enter the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
 	sudo -u "$name" git clone https://${username}:${pass}@github.com/${username}/${repo}.git /home/${name}/.local/share/password-store >/dev/null 2>&1
-	sudo -u "$name" git config credential.helper '!pass-git-helper $@'
+	sudo -u "$name" git config --global credential.helper '!pass-git-helper $@'
 	}
-	
+
 setupgit() {
 	sudo -u "$name" git config --global user.email "cereda.ste@gmail.com"
 	sudo -u "$name" git config --global user.name "Stefano Cereda"
