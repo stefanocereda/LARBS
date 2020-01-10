@@ -163,7 +163,7 @@ setuppass() {
 	username=$(dialog --no-cancel --passwordbox "Enter a username for the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
         pass=$(dialog --no-cancel --passwordbox "Enter a password for the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
 	repo=$(dialog --no-cancel --passwordbox "Enter the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
-	sudo -u "$name" git clone https://${username}:${pass}@github.com/${username}/${repo}.git .local/share/password-store >/dev/null 2>&1
+	sudo -u "$name" git clone https://${username}:${pass}@github.com/${username}/${repo}.git /home/${name}/.local/share/password-store >/dev/null 2>&1
 	}
 
 
