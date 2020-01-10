@@ -253,6 +253,11 @@ setuppass
 # My commit identity
 setupgit
 
+# Enable TLP
+sudo systemctl enable tlp.service
+sudo systemctl enable tlp-sleep.service
+sudo systemctl mask systemd-rfkill.service
+
 # Last message! Install complete!
 finalize
 clear
