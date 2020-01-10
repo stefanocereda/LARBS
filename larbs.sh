@@ -149,10 +149,21 @@ systembeepoff() { dialog --infobox "Getting rid of that retarded error beep soun
 	echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf ;}
 
 finalize(){ \
-	dialog --infobox "Preparing welcome message..." 4 50
-	echo "exec_always --no-startup-id notify-send -i ~/.local/share/larbs/larbs.png 'Welcome to LARBS:' 'Press Super+F1 for the manual.' -t 10000"  >> "/home/$name/.config/i3/config"
 	dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Luke" 12 80
 	}
+	
+setupnetworkmanager(){
+        dialog --infobox "Installing and enabling NetworkManager..." 4 60
+	installpkg networkmanager
+	sudo systemctl enable NetworkManager
+	}
+
+setuppass() {
+	dialog --title "GnuPG!" --msgbox "Please import and trust your GnuPG keys before going on" 10 60
+	pass=$(dialog --no-cancel --passwordbox "Enter a password for the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
+	sudo -u "$name" git clone https://github.com/stefanocereda:${pass}/pass.git .password-store >/dev/null 2>&1 &&
+        }
+
 
 ### THE ACTUAL SCRIPT ###
 
@@ -160,6 +171,9 @@ finalize(){ \
 
 # Check if user is root on Arch distro. Install dialog.
 installpkg dialog ||  error "Are you sure you're running this as the root user and have an internet connection?"
+
+# Install and enable NetworkManager
+setupnetworkmanager
 
 # Welcome user and pick dotfiles.
 welcomemsg || error "User exited."
@@ -225,6 +239,9 @@ dbus-uuidgen > /var/lib/dbus/machine-id
 
 # Let LARBS know the WM it's supposed to run.
 echo "$edition" > "/home/$name/.local/share/larbs/wm"; chown "$name:wheel" "/home/$name/.local/share/larbs/wm"
+
+# Copy GnuPG keys and add clone pass repository
+setuppass
 
 # Last message! Install complete!
 finalize
