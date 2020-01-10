@@ -166,6 +166,11 @@ setuppass() {
 	sudo -u "$name" git clone https://${username}:${pass}@github.com/${username}/${repo}.git /home/${name}/.local/share/password-store >/dev/null 2>&1
 	sudo -u "$name" git config credential.helper '!pass-git-helper $@'
 	}
+	
+setupgit() {
+	sudo -u "$name" git config --global user.email "cereda.ste@gmail.com"
+	sudo -u "$name" git config --global user.name "Stefano Cereda"
+	}
 
 
 ### THE ACTUAL SCRIPT ###
@@ -245,6 +250,8 @@ echo "$edition" > "/home/$name/.local/share/larbs/wm"; chown "$name:wheel" "/hom
 
 # Copy GnuPG keys and add clone pass repository
 setuppass
+# My commit identity
+setupgit
 
 # Last message! Install complete!
 finalize
