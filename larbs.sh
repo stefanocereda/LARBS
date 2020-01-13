@@ -273,6 +273,11 @@ tlp()
 # Better fonts
 fonts()
 
+# link latex fonts
+ln -s /etc/fonts/conf.avail/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf
+fc-cache && mkfontscale && mkfontdir
+
+
 # Last message! Install complete!
 finalize
 clear
