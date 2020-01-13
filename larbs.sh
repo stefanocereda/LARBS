@@ -172,6 +172,19 @@ setupgit() {
 	sudo -u "$name" git config --global user.name "Stefano Cereda"
 	}
 
+tlp() {
+	sudo systemctl enable tlp.service
+	sudo systemctl enable tlp-sleep.service
+	sudo systemctl mask systemd-rfkill.service
+}
+
+
+fonts() {
+	ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
+	ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
+	ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
+	echo 'export FREETYPE_PROPERTIES="truetype:interpreter-version=40"' >> /etc/profile.d/freetype2.sh
+}
 
 ### THE ACTUAL SCRIPT ###
 
@@ -250,13 +263,15 @@ echo "$edition" > "/home/$name/.local/share/larbs/wm"; chown "$name:wheel" "/hom
 
 # Copy GnuPG keys and add clone pass repository
 setuppass
+
 # My commit identity
 setupgit
 
 # Enable TLP
-sudo systemctl enable tlp.service
-sudo systemctl enable tlp-sleep.service
-sudo systemctl mask systemd-rfkill.service
+tlp()
+
+# Better fonts
+fonts()
 
 # Last message! Install complete!
 finalize
