@@ -184,6 +184,9 @@ fonts() {
 	ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
 	ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
 	echo 'export FREETYPE_PROPERTIES="truetype:interpreter-version=40"' >> /etc/profile.d/freetype2.sh
+	# link latex fonts
+	ln -s /etc/fonts/conf.avail/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf
+	fc-cache && mkfontscale && mkfontdir
 }
 
 ### THE ACTUAL SCRIPT ###
@@ -273,10 +276,7 @@ tlp()
 # Better fonts
 fonts()
 
-# link latex fonts
-ln -s /etc/fonts/conf.avail/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf
-fc-cache && mkfontscale && mkfontdir
-
+sudo sustemctl enable cronie.service
 
 # Last message! Install complete!
 finalize
