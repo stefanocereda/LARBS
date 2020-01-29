@@ -160,10 +160,10 @@ setupnetworkmanager(){
 
 setuppass() {
 	dialog --title "GnuPG!" --msgbox "Please import and trust your GnuPG keys before going on" 10 60
-	username=$(dialog --no-cancel --passwordbox "Enter a username for the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
+	username=$(dialog --no-cancel --inputbox "Enter a username for the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
         pass=$(dialog --no-cancel --passwordbox "Enter a password for the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
-	repo=$(dialog --no-cancel --passwordbox "Enter the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
-	sudo -u "$name" git clone https://${username}:${pass}@github.com/${username}/${repo}.git /home/${name}/.local/share/password-store >/dev/null 2>&1
+	repo=$(dialog --no-cancel --inputbox "Enter the pass repo." 10 60 3>&1 1>&2 2>&3 3>&1)
+	sudo -u "$name" git clone https://"${username}":"${pass}"@github.com/"${username}"/"${repo}".git /home/"${name}"/.local/share/password-store >/dev/null 2>&1
 	sudo -u "$name" git config --global credential.helper '!pass-git-helper $@'
 	}
 
@@ -271,12 +271,12 @@ setuppass
 setupgit
 
 # Enable TLP
-tlp()
+tlp
 
 # Better fonts
-fonts()
+fonts
 
-sudo sustemctl enable cronie.service
+systemctl enable cronie.service
 
 # Last message! Install complete!
 finalize
