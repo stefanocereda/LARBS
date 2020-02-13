@@ -80,6 +80,7 @@ G,https://github.com/lukesmithxyz/st.git,"is my custom build of suckless's termi
 G,https://github.com/lukesmithxyz/dwm.git,"is the window manager."
 ,slock,"allows you to lock your computer, and quickly unlock with your password."
 ,pass,"password manager"
+A,pass-update,"easier flow to update password"
 A,pass-git-helper,"git integration for pass"
 ,tlp,"Linux Advanced Power Management"
 ,acpi_call,"module for ThinkPad battery recalibration"
